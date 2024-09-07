@@ -15,9 +15,14 @@ let bookings = [];
 
 // Load initial data (if exists)
 try {
-  const data = JSON.parse(fs.readFileSync("data/data.json", "utf-8"));
-  rooms = data.rooms || [];
-  bookings = data.bookings || [];
+  const dataPath = "data/data.json";
+  if (fs.existsSync(dataPath)) {
+    const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+    rooms = data.rooms || [];
+    bookings = data.bookings || [];
+  } else {
+    console.warn("Data file not found. Using empty initial data.");
+  }
 } catch (error) {
   console.error("Error loading initial data:", error);
 }
